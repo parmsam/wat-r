@@ -1,0 +1,94 @@
+---
+title: "wat r"
+author: "Sam Parmar"
+format: html
+editor: visual
+---
+
+This doc is a collection of weird or unexpected things I've found using R for a few years. It's helped me learn and understand R better. I hope it helps you too.
+
+![](https://media2.giphy.com/media/cNZmQ1qfjIZa4Xr3VE/giphy.webp?cid=ecf05e47t4migni317q4zcsb1eho8d4235kf9bmizpcmyd6c&ep=v1_gifs_search&rid=giphy.webp&ct=g)
+
+# Returns
+
+Implicit returns are great but gotta be careful when using them. Let's work with a conditional.
+
+```{r}
+cond_implicit <- function(abc = 5, cond = T){
+  if(cond){
+    abc + 10
+  }
+  abc + 5
+}
+```
+
+```{r}
+cond_implicit()
+cond_implicit(20)
+cond_implicit(20, T)
+```
+
+Let's make some functions that return things. Oh, I forgot to do an implicit or explicit return. What happens?
+
+```{r}
+get_one <- function(){
+  x <- 1 
+  y <- 5
+}
+add_one <- function(x){
+  x + 1
+}
+get_it <- function(x){
+  a <- x + 1
+  y <- 15
+}
+```
+
+```{r}
+get_one()
+```
+
+As expected nothing is printed in console.
+
+```{r}
+get_one() + 1
+get_one() |> add_one()
+```
+
+But wait something is there...that gets returned. The last assigned object gets returned. 
+
+# Skipping arguments
+
+Okay, create a simple function that adds up three variables. We'll use simple defaults and the new R function declaration syntax. 
+
+```{r}
+add_em_up <- \(a = 1, b = 2, c = 3) {
+  a + b + c
+}  
+```
+
+Do you not like certain arguments? Well, you can skip them. Still works.
+
+```{r}
+add_em_up(2, , 4)
+add_em_up(,,4)
+add_em_up(,2,)
+```
+
+# Partial matching
+
+This is a well known one and one reason why I prefer tibbles. 
+
+```{r}
+df <- data.frame(a = 1:4, cd = 2:5)
+df$c
+```
+
+It also applies to functions.
+
+```{r}
+b <- function(b = 10, abc = 5){
+  abc + 5
+}
+b(ab = 5)
+```

@@ -103,3 +103,9 @@ b <- function(b = 10, abc = 5){
 }
 b(ab = 5)
 ```
+
+And lists
+```{r}
+x <- list(abc = 2, b = 3)
+x$ab
+```
